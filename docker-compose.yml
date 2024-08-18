@@ -30,7 +30,6 @@ services:
       - GF_SMTP_FROM_NAME=phat
       - GF_SMTP_PASSWORD=ttuhhbjyxwpptbwn
       - GF_SMTP_USER=letanphat15122004
-
     networks:
       network:
         ipv4_address: 172.18.0.102
@@ -57,7 +56,8 @@ services:
     volumes:
       - /:/host:ro,rslave
     networks:
-    - network
+      network:
+        ipv4_address: 172.18.0.104
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.50.0
@@ -77,7 +77,8 @@ services:
     privileged: true
     restart: unless-stopped
     networks:
-    - network
+      network:
+        ipv4_address: 172.18.0.105
 
 volumes:
   prometheus-data:
