@@ -1,14 +1,16 @@
 groups:
 - name: node_exporter
   rules:
+
+  # Alert if Node exporter is down
   - alert: NodeDown
     expr: up == 0
-    for: 1m
+    for: 7s
     labels:
       severity: critical
     annotations:
       title: Node {{ $labels.instance }} is down
-      description: Failed to scrape {{ $labels.job }} on {{ $labels.instance }} for more than 1 minutes. Node seems down.
+      description: Failed to scrape {{ $labels.job }} on {{ $labels.instance }}. Node seems down.
   
   # Alert if any node has a CPU usage above 80% for more than 5 minutes
   - alert: HighCPUUsage
@@ -42,11 +44,14 @@ groups:
 
 - name: cadvisor
   rules:
+
+  # Alert if Nginx container experiences downtime within 7s
   - alert: Nginx
     expr: time() - container_last_seen{name="nginx"} > 10
-    for: 0m
+    for: 7s
     labels:
       severity: critical
     annotations:
+      summary: "Nginx has encountered problem"
+      description: "Nginx is experiencing downtime"
       title: Nginx is down
-      description: Nginx container is down
